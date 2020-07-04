@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	//	"html/template"
 	"io/ioutil"
 	"net/http"
 	"net/smtp"
@@ -19,7 +18,7 @@ func (s *smtpServer) Address() string {
 
 func main() {
 	url := "https://api.ipify.org?format=text"
-	fmt.Println("IP adresi aliniyor...")
+	fmt.Println(string("IP adresi alınıyor..."))
 	resp, err := http.Get(url)
 	if err != nil {
 		panic(err)
@@ -33,10 +32,15 @@ func main() {
 
 	from := "berked20031@gmail.com"
 	password := "nebeka565771"
-	fmt.Println("Posta Gonderiliyor...")
+	fmt.Println(string("Posta Gönderiliyor..."))
 	to := []string{"berked2003@hotmail.com", "awsd2003@hotmail.com"}
 	smtpServer := smtpServer{host: "smtp.gmail.com", port: "587"}
-	message := []byte("<body>berke</body>")
+	message := []byte(
+		string("Subject: IP Adresiniz Deişti Berke Hazretleri\r\n") +
+			"\r\n" +
+			"IP Adresiniz: " +
+			string(ip) +
+			"\r\n")
 	auth := smtp.PlainAuth("", from, password, smtpServer.host)
 	smtperr := smtp.SendMail(smtpServer.Address(), auth, from, to, message)
 	if smtperr != nil {
